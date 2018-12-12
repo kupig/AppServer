@@ -1,0 +1,5 @@
+<PluginConfig>
+	<GameServer>
+		<Plugin Name="libfunc" />
+	</GameServer>
+</PluginConfig>
