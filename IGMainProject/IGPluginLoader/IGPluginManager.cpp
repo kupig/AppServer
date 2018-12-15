@@ -95,7 +95,9 @@ IGPluginManager::SetAppName(const char *appName)
 	}
 
 	mAppName = appName;	
+#if IG_PLATFORM == IG_PLATFORM_LINUX
 	prctl(PR_SET_NAME, ("IG" + mAppName).c_str());
+#endif
 	return true;
 }
 

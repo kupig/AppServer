@@ -1,18 +1,23 @@
-cc = g++
-output = loader
-src =./IGMainProject/IGPluginLoader/IGPluginManager.cpp \
-	 ./IGMainProject/IGPluginLoader/IGPluginLoader.cpp \
-	 ./IGMainProject/Dependencies/rapidxml/rapidxml.hpp \
-   	 ./IGMainProject/Dependencies/rapidxml/rapidxml_iterators.hpp \
-	 ./IGMainProject/Dependencies/rapidxml/rapidxml_print.hpp \
-	 ./IGMainProject/Dependencies/rapidxml/rapidxml_utils.hpp \
-	 ./IGMainProject/IGPluginLoader/IGDynamicLib.cpp
-lib = -ldl
-flag = -g -o
 
-$(output): $(src)
-	$(cc) $^ $(flag) $@ $(lib)
-	mv loader ./Bin
+CC=g++
+CFLAG=-g -Wall
+
+SOURCE:=$(shell find . -name "*.cpp")
+TARGET=$(SOURCE:.cpp=.o)
+OBJECT=IGLoader
+
+all: $(OBJECT)
+	-mv $(TARGET) ./Bin	
+	-mv $(SOURCE:.cpp=.d) ./Bin	
+	-mv $(OBJECT) ./Bin	
+
+$(OBJECT):$(TARGET)
+	$(CC) $(CFLAG) -o $@ $^
+	
+%.o:%.cpp
+	$(CC) $(CFLAG) -MMD -c -o $@ $< 
+
+-include $(TARGET_MMD)
 
 clean:
-	rm -rf $(output) ./Bin/loader
+	rm ./Bin/$(OBJECT) ./Bin/*.o ./Bin/*.d	
