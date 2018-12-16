@@ -150,7 +150,7 @@ IGPluginManager::LoadPluginLibrary()
 			break;
 		}
 
-		pFunc pFunction = (void(*)())pluginLib->GetSymbol("func");
+		pFunc pFunction = (void(*)())pluginLib->GetSymbol("LibPluginStart");
 		pFunction();
 		
 		mPluginLibMap.insert(PluginLibMap::value_type(it->first, pluginLib));

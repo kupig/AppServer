@@ -5,7 +5,7 @@ class IGIMoudle
 {
 public:
 	IGIMoudle() {}
-	virtual ~IGMoudle() {}
+	virtual ~IGIMoudle() {}
 
 	virtual bool Awake() { return true; }		
 	virtual bool Init() { return true; }

@@ -1,7 +1,12 @@
 #ifndef IG_IPLUGIN_H
 #define IG_IPLUGIN_H
 
+#include "IGIMoudle.h"
+#include "../IGCommon/IGMap.h"
+
 class IGIPlugin
+	: public IGIMoudle
+	, public IGMap<std::string, IGIMoudle>
 {
 public:
 	IGIPlugin() {}

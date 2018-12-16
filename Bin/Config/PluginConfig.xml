@@ -1,5 +1,5 @@
 <PluginConfig>
 	<GameServer>
-		<Plugin Name="libfunc" />
+		<Plugin Name="libTutorial1" />
 	</GameServer>
 </PluginConfig>

@@ -20,4 +20,4 @@ $(OBJECT):$(TARGET)
 -include $(TARGET_MMD)
 
 clean:
-	rm ./Bin/$(OBJECT) ./Bin/*.o ./Bin/*.d	
+	rm ./Bin/$(OBJECT) ./Bin/*.o ./Bin/*.d ./Bin/*.so

@@ -4,12 +4,11 @@
 #include <map>
 #include <string>
 
-template<class T, class D>
+template<typename T, typename D>
 class IGMap
 {
 public:
 	typedef std::map<T, D*> IGMAPOBJECT;	
-	typedef std::map<T, D*>::iterator IGMAPOBJECT_ITER;
 
 	IGMap() {}
 	virtual ~IGMap() {}
@@ -18,10 +17,10 @@ public:
 	{
 		bool ret = false;
 
-		IGMAPOBJECT_ITER iter = mMapObject.find(name);
+		typename IGMAPOBJECT::iterator iter = mMapObject.find(name);
 		if (iter == mMapObject.end())
 		{
-			mMapObject.insert(IGMAPOBJECT::value_type(name, data);
+			mMapObject.insert(IGMAPOBJECT::value_type(name, data));
 			ret = true;			
 		}
 		
@@ -32,7 +31,7 @@ public:
 	{
 		D* pData = NULL;
 		
-		IGMAPOBJECT_ITER iter = mMapObject.find(name);
+		typename IGMAPOBJECT::iterator iter = mMapObject.find(name);
 		if (iter != mMapObject.end())
 		{
 			pData = iter->second;
@@ -68,7 +67,7 @@ public:
 
 private:
 	IGMAPOBJECT mMapObject;
-	IGMAPOBJECT_ITER mCurrObjectIter;	
+	typename IGMAPOBJECT::iterator mCurrObjectIter;
 };
 
 #endif //IG_MAP_H
