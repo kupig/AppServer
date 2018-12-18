@@ -41,8 +41,10 @@
 #include <sys/prctl.h>
 #endif
 
+#include <stdio.h>
+
 #define PRINT_FUNC() 		\
-	(printf("IGPluginManager::%s()\n", __FUNCTION__))
+	(printf("%s::%s()\n", __FILE__, __FUNCTION__))
 
 #define XDELETE(POINT) do 	\
 	{						\
@@ -50,4 +52,5 @@
 		POINT = NULL;		\
 	} while (0)
 
+#define PLUGIN_NAME(className) #className
 #endif // IG_PLATFORM_H
