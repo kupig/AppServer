@@ -12,7 +12,7 @@ all: $(OBJECT)
 	-mv $(OBJECT) ./Bin	
 
 $(OBJECT):$(TARGET)
-	$(CC) $(CFLAG) -o $@ $^
+	$(CC) $(CFLAG) -o $@ $^ -ldl
 	
 %.o:%.cpp
 	$(CC) $(CFLAG) -MMD -c -o $@ $< 
