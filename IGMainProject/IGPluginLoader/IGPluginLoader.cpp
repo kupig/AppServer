@@ -39,6 +39,7 @@ int main(int argc, char* argv[])
 
 	IGPluginManager::Instance().Awake();
 	IGPluginManager::Instance().Init();
+	IGPluginManager::Instance().AfterInit();
 	
 	//while (1)
 	{
