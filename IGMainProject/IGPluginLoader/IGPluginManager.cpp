@@ -5,7 +5,14 @@
 #include "../Dependencies/rapidxml/rapidxml_print.hpp"
 #include "../Dependencies/rapidxml/rapidxml_utils.hpp"
 
-typedef void (*pFunc)(void);
+#define FOR_EACH_MAP(FUNCTION)		\
+	PluginInstanceMap::iterator it = mPluginInstanceMap.begin();	\
+	for (; it != mPluginInstanceMap.end(); it++)					\
+	{ 																\
+		it->second->FUNCTION();										\
+	}
+
+typedef void (*pFunc)(IGIPluginManager *pPluginManager);
 
 IGPluginManager::IGPluginManager()
 	: mAppName("")
@@ -25,6 +32,7 @@ IGPluginManager::Awake()
 	PRINT_FUNC();
 	LoadPluginConfig();
 	LoadPluginLibrary();
+	FOR_EACH_MAP(Awake);	
 
 	return true;
 }
@@ -32,14 +40,16 @@ IGPluginManager::Awake()
 bool 
 IGPluginManager::Init()
 {
-	PRINT_FUNC();
+	//PRINT_FUNC();
+	FOR_EACH_MAP(Init);
 	return true;	
 }
 
 bool
 IGPluginManager::AfterInit()
 {
-	PRINT_FUNC();
+	//PRINT_FUNC();
+	FOR_EACH_MAP(AfterInit);
 	return true;
 }
 
@@ -60,7 +70,8 @@ IGPluginManager::ReadyExecute()
 bool
 IGPluginManager::Update()
 {
-	PRINT_FUNC();
+	//PRINT_FUNC();
+	FOR_EACH_MAP(Update);
 	return true;
 }
 
@@ -81,7 +92,8 @@ IGPluginManager::Shut()
 bool 
 IGPluginManager::Finalize()
 {
-	PRINT_FUNC();
+	//PRINT_FUNC();
+	FOR_EACH_MAP(Finalize);
 	UnLoadPluginLibrary();
 	return true;
 }
@@ -99,6 +111,66 @@ IGPluginManager::SetAppName(const char *appName)
 	prctl(PR_SET_NAME, ("IG" + mAppName).c_str());
 #endif
 	return true;
+}
+
+bool 
+IGPluginManager::RegisterPlugin(IGIPlugin *pPlugin)
+{
+	bool ret = false;
+
+	if (pPlugin != NULL) 
+	{
+		std::string pluginName = pPlugin->GetPluginName();
+		
+		if (mPluginInstanceMap.find(pluginName) == mPluginInstanceMap.end())
+		{
+			mPluginInstanceMap.insert(make_pair(pluginName, pPlugin));
+			pPlugin->InstallMoudle();
+			ret = true;
+		}
+		else
+		{
+			// ASSERT TO DO ...
+		}
+	}
+
+	return ret;	
+}
+
+bool 
+IGPluginManager::UnregisterPlugin(IGIPlugin *pPlugin)
+{
+	bool ret = false;
+	
+	if (pPlugin)
+	{
+		std::string pluginName = pPlugin->GetPluginName();
+		
+		PluginInstanceMap::iterator it = mPluginInstanceMap.find(pluginName);
+		if (it != mPluginInstanceMap.end())
+		{
+			it->second->UninstallMoudle();
+			XDELETE(it->second);
+			it->second = NULL;
+			mPluginInstanceMap.erase(it);
+			
+			ret = true;
+		}
+	}	
+
+	return ret;
+}
+
+IGIPlugin *
+IGPluginManager::FindPlugin(std::string pluginName)
+{
+	PluginInstanceMap::iterator it = mPluginInstanceMap.find(pluginName);
+	if (it != mPluginInstanceMap.end())
+	{
+		return it->second;
+	}
+
+	return NULL;
 }
 
 bool
@@ -150,9 +222,13 @@ IGPluginManager::LoadPluginLibrary()
 			break;
 		}
 
-		pFunc pFunction = (void(*)())pluginLib->GetSymbol("LibPluginStart");
-		pFunction();
-		
+		pFunc pFunction = (void(*)(IGIPluginManager*))pluginLib->GetSymbol("LibPluginStart");
+		if (!pFunction)
+		{
+			break;
+		}
+
+		pFunction(this);
 		mPluginLibMap.insert(PluginLibMap::value_type(it->first, pluginLib));
 	}
 
@@ -178,6 +254,13 @@ IGPluginManager::UnLoadPluginLibrary()
 					break;
 				}
 				
+				pFunc pFunction = (void(*)(IGIPluginManager*))pluginLib->GetSymbol("LibPluginStop");
+				if (!pFunction)
+				{
+					break;
+				}
+
+				pFunction(this);			
 				pluginLib->UnLoadLibrary();	
 				XDELETE(pluginLib);				
 			}
