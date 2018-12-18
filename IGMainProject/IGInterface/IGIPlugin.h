@@ -12,23 +12,23 @@
 	IGIPlugin *p##className = pPluginManager->FindPlugin(#className);\
 	pPluginManager->UnregisterPlugin(p##className);
 
-#define REGISTER_MOUDLE(pPluginManager, className)			\
-	do {													\
-		IGIMoudle *pMoudle##className = new className();	\
-		Add(#className, pMoudle##className);				\
+#define REGISTER_MOUDLE(pPluginManager, className)		\
+	do {							\
+		IGIMoudle *pMoudle##className = new className();\
+		Add(#className, pMoudle##className);		\
 	} while (0)
 
 #define UNREGISTER_MOUDLE(pPluginManager, className)		\
-	do {													\
+	do {							\
 		IGIMoudle *pMoudele##className = Remove(#className);\
-		delete pMoudele##className;							\
+		delete pMoudele##className;			\
 	} while (0)
 
-#define EXEC_EACH_MOUDLE(FUNC_NAME)	\
-	IGIMoudle* pMoudle = First();	\
-	while (pMoudle)	{				\
-		pMoudle->FUNC_NAME();		\
-		pMoudle = Next();			\
+#define EXEC_EACH_MOUDLE(FUNC_NAME)				\
+	IGIMoudle* pMoudle = First();				\
+	while (pMoudle)	{					\
+		pMoudle->FUNC_NAME();				\
+		pMoudle = Next();				\
 	}
 
 class IGIPlugin
