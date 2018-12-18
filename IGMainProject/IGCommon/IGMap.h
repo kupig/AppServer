@@ -20,7 +20,7 @@ public:
 		typename IGMAPOBJECT::iterator iter = mMapObject.find(name);
 		if (iter == mMapObject.end())
 		{
-			mMapObject.insert(IGMAPOBJECT::value_type(name, data));
+			mMapObject.insert(typename IGMAPOBJECT::value_type(name, data));
 			ret = true;			
 		}
 		
