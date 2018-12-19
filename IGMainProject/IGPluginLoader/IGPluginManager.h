@@ -18,11 +18,7 @@ public:
 	virtual bool Awake();
 	virtual bool Init();
 	virtual bool AfterInit();
-	virtual bool CheckConfig();
-	virtual bool ReadyExecute();
 	virtual bool Update();
-	virtual bool BeforeShut();
-	virtual bool Shut();
 	virtual bool Finalize();
 
 	bool SetAppName(const char *appName);
@@ -30,6 +26,7 @@ public:
 	virtual bool RegisterPlugin(IGIPlugin *pPlugin);
 	virtual bool UnregisterPlugin(IGIPlugin *pPlugin);
 	virtual IGIPlugin *FindPlugin(std::string pluginName);
+
 protected:
 	bool LoadPluginConfig();
 	bool LoadPluginLibrary();

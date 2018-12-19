@@ -5,7 +5,7 @@ template <class T>
 class IGSingleton
 {
 public:
-	static T& Instance() {
+static T& Instance() {
 		static T theIGSingleton;
 		return theIGSingleton;
 	}

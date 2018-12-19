@@ -14,7 +14,7 @@ IGDynamicLib::~IGDynamicLib()
 bool
 IGDynamicLib::LoadLibrary()
 {
-	std::string libPath = "./" + mPluginName + ".so";
+	std::string libPath = "./lib" + mPluginName + ".so";
 	mLibHandle = dlopen(libPath.c_str(), RTLD_LAZY);
 	if (!mLibHandle)
 	{

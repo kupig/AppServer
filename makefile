@@ -6,7 +6,8 @@ CFLAG=-g -Wall
 SOURCE:=$(shell find IGMainProject -name "*.cpp")
 TARGET=$(SOURCE:.cpp=.o)
 
-LIBS=IGLibProject 
+LIBS=IGLibProject/Tutorial1 \
+	 IGLibProject/Tutorial2
 
 LIBS_DIR=$(LIBS:=.SUBDIR)
 
@@ -22,7 +23,7 @@ $(OBJECT):$(TARGET)
 	$(CXX) $(CFLAG) -o $@ $^ -ldl
 	
 %.o:%.cpp
-	$(CXX) $(CFLAG) -MMD -c -o $@ $< 
+	$(CXX) $(CFLAG) -MMD -c -o $@ $< -std=gnu++11
 
 -include $(SOURCE:.cpp=.d)
 

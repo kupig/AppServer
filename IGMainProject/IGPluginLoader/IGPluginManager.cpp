@@ -19,6 +19,7 @@ IGPluginManager::IGPluginManager()
 {
 	mPluginNameMap.clear();
 	mPluginLibMap.clear();	
+	mMoudleInstanceMap.clear();
 }
 
 IGPluginManager::~IGPluginManager()
@@ -40,7 +41,7 @@ IGPluginManager::Awake()
 bool 
 IGPluginManager::Init()
 {
-	//PRINT_FUNC();
+	PRINT_FUNC();
 	FOR_EACH_MAP(Init);
 	return true;	
 }
@@ -48,51 +49,23 @@ IGPluginManager::Init()
 bool
 IGPluginManager::AfterInit()
 {
-	//PRINT_FUNC();
+	PRINT_FUNC();
 	FOR_EACH_MAP(AfterInit);
-	return true;
-}
-
-bool 
-IGPluginManager::CheckConfig()
-{
-	PRINT_FUNC();
-	return true;
-}
-
-bool
-IGPluginManager::ReadyExecute()
-{
-	PRINT_FUNC();
 	return true;
 }
 
 bool
 IGPluginManager::Update()
 {
-	//PRINT_FUNC();
+	PRINT_FUNC();
 	FOR_EACH_MAP(Update);
-	return true;
-}
-
-bool
-IGPluginManager::BeforeShut()
-{
-	PRINT_FUNC();
-	return true;
-}
-
-bool 
-IGPluginManager::Shut()
-{
-	PRINT_FUNC();
 	return true;
 }
 
 bool 
 IGPluginManager::Finalize()
 {
-	//PRINT_FUNC();
+	PRINT_FUNC();
 	FOR_EACH_MAP(Finalize);
 	UnLoadPluginLibrary();
 	return true;

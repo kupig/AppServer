@@ -1,4 +1,6 @@
 #include "IGPluginManager.h"
+#include <thread>
+#include <chrono>
 
 void PrintInfo()
 {
@@ -14,7 +16,7 @@ void ConfigParam(int argc, char *argv[])
 {
 	// argv[0] : filepath
 	// argv[1] : server name
-	// argv[2] : server Id
+	// argv[2] : server Id (to do ...)
 
 	std::string param = "";
 	for (int i = 0; i < argc; i++)
@@ -27,10 +29,7 @@ void ConfigParam(int argc, char *argv[])
 			break;
 		}
 	}
-
-	printf("start parameter: %s\n\n", param.c_str());
-
-	}
+}
 
 int main(int argc, char* argv[])
 {
@@ -39,12 +38,11 @@ int main(int argc, char* argv[])
 
 	IGPluginManager::Instance().Awake();
 	IGPluginManager::Instance().Init();
-	IGPluginManager::Instance().AfterInit();
-	
-	//while (1)
+	IGPluginManager::Instance().AfterInit();	
+	while (true)
 	{
-		//IGPluginManager::Instance().Update();
-
+		std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+		IGPluginManager::Instance().Update();
 	}
 
 	IGPluginManager::Instance().Finalize();

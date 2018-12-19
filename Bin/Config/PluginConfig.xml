@@ -1,5 +1,6 @@
 <PluginConfig>
-	<GameServer>
-		<Plugin Name="libTutorial1" />
-	</GameServer>
+	<Tutorial>
+		<Plugin Name="Tutorial1" />
+		<Plugin Name="Tutorial2" />
+	</Tutorial>
 </PluginConfig>
