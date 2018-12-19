@@ -1,23 +1,34 @@
 
-CC=g++
+CXX?=g++
+MAKE?=make
 CFLAG=-g -Wall
 
-SOURCE:=$(shell find . -name "*.cpp")
+SOURCE:=$(shell find IGMainProject -name "*.cpp")
 TARGET=$(SOURCE:.cpp=.o)
-OBJECT=IGLoader
 
-all: $(OBJECT)
-	-mv $(TARGET) ./Bin	
-	-mv $(SOURCE:.cpp=.d) ./Bin	
-	-mv $(OBJECT) ./Bin	
+LIBS=IGLibProject 
+
+LIBS_DIR=$(LIBS:=.SUBDIR)
+
+OBJECT=Bin/IGLoader
+
+all: $(OBJECT) $(LIBS_DIR)
+	@echo "All make done!!"
+
+$(LIBS_DIR):%.SUBDIR:%
+	$(MAKE) -C $^
 
 $(OBJECT):$(TARGET)
-	$(CC) $(CFLAG) -o $@ $^ -ldl
+	$(CXX) $(CFLAG) -o $@ $^ -ldl
 	
 %.o:%.cpp
-	$(CC) $(CFLAG) -MMD -c -o $@ $< 
+	$(CXX) $(CFLAG) -MMD -c -o $@ $< 
 
--include $(TARGET_MMD)
+-include $(SOURCE:.cpp=.d)
+
+.PHONY:all clean $(LIBS_DIR)
 
 clean:
-	rm ./Bin/$(OBJECT) ./Bin/*.o ./Bin/*.d ./Bin/*.so
+	@find -name "*.o" -exec rm -v {} \;
+	@find -name "*.d" -exec rm -v {} \;
+	@find -type f -perm -111 -exec rm -v {} \;
