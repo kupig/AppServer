@@ -1,7 +1,7 @@
 
 CXX?=g++
 MAKE?=make
-CFLAG=-g -Wall
+CFLAG=-g -Wall -O0
 
 SOURCE:=$(shell find IGMainProject -name "*.cpp")
 TARGET=$(SOURCE:.cpp=.o)

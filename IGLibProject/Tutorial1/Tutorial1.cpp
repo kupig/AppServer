@@ -1,7 +1,7 @@
 #include "Tutorial1.h"
 #include <stdio.h>
 #include "../../IGMainProject/IGCommon/IGPlatform.h"
-#include "TutorialMoudle1.h"
+#include "Tutorial1Moudle1.h"
 
 extern "C" void LibPluginStart(IGIPluginManager *pPluginManager)
 {
@@ -28,14 +28,14 @@ void
 Tutorial1::InstallMoudle()
 {
 	PRINT_FUNC();
-	REGISTER_MOUDLE(pPluginManager, TutorialMoudle1);
+	REGISTER_MOUDLE(pPluginManager, IGITutorial1Moudle1, Tutorial1Moudle1);
 }
 
 void
 Tutorial1::UninstallMoudle()
 {
 	PRINT_FUNC();
-	UNREGISTER_MOUDLE(pPluginManager, TutorialMoudle1);
+	UNREGISTER_MOUDLE(pPluginManager, IGITutorial1Moudle1, Tutorial1Moudle1);
 }
 
 std::string

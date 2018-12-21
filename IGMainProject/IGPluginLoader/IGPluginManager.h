@@ -25,7 +25,12 @@ public:
 	
 	virtual bool RegisterPlugin(IGIPlugin *pPlugin);
 	virtual bool UnregisterPlugin(IGIPlugin *pPlugin);
-	virtual IGIPlugin *FindPlugin(std::string pluginName);
+	
+	virtual bool AddMoudle(const std::string &moudleName, IGIMoudle *pMoudle);
+	virtual bool RemoveMoudle(const std::string &moudleName);
+
+	virtual IGIPlugin *FindPlugin(const std::string &pluginName);
+	virtual IGIMoudle *FindMoudle(const std::string &moudleName);
 
 protected:
 	bool LoadPluginConfig();

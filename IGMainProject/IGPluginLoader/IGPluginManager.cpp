@@ -134,11 +134,60 @@ IGPluginManager::UnregisterPlugin(IGIPlugin *pPlugin)
 	return ret;
 }
 
+bool
+IGPluginManager::AddMoudle(const std::string &moudleName, IGIMoudle *pMoudle)
+{
+		bool ret = false;
+
+		MoudleInstanceMap::iterator it = mMoudleInstanceMap.find(moudleName);	
+		if (it != mMoudleInstanceMap.end())
+		{
+			// ERROR_LOG OR ASSERT
+		}
+		else
+		{
+			mMoudleInstanceMap.insert(MoudleInstanceMap::value_type(moudleName, pMoudle));
+			ret = true;
+		}
+
+		return ret;
+}
+
+bool
+IGPluginManager::RemoveMoudle(const std::string &moudleName)
+{
+	bool ret = false;
+
+	MoudleInstanceMap::iterator it = mMoudleInstanceMap.find(moudleName);	
+	if (it != mMoudleInstanceMap.end())
+	{
+		mMoudleInstanceMap.erase(it);
+		
+		// it->second has been delete in "UNREGISTER_MOUDLE"
+	}
+
+	return ret;
+}
+
 IGIPlugin *
-IGPluginManager::FindPlugin(std::string pluginName)
+IGPluginManager::FindPlugin(const std::string &pluginName)
 {
 	PluginInstanceMap::iterator it = mPluginInstanceMap.find(pluginName);
 	if (it != mPluginInstanceMap.end())
+	{
+		return it->second;
+	}
+
+	return NULL;
+}
+
+IGIMoudle *
+IGPluginManager::FindMoudle(const std::string &moudleName)
+{
+	std::string subClassName = moudleName.substr(2);
+
+	MoudleInstanceMap::iterator it = mMoudleInstanceMap.find(subClassName);
+	if (it != mMoudleInstanceMap.end())
 	{
 		return it->second;
 	}
