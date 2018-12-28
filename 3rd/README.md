@@ -1,5 +1,5 @@
 # 用于存放第三方库压缩文件
-
+## 解析XML
 * **rapidxml-1.13.zip:  xml**
 
   ```c++
@@ -19,5 +19,12 @@
   typedef typename std::ptrdiff_t difference_type;
   typedef typename std::bidirectional_iterator_tag iterator_category;
   ```
-
+## 网络库LIBEVENT
+* **libevent-2.1.8-stable.tar**
+  ```c++
+  编辑 *.a 步骤
+  1)  ./configure CPPFLAGS=-fPIC --disable-shared --disable-openss
+  2)  make
+  3)  cd ./.libs
+  ```
 
