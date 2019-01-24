@@ -37,6 +37,12 @@ IGCNet::InitServer(int port)
 		   	LEV_OPT_REUSEABLE | LEV_OPT_CLOSE_ON_FREE, -1,
 			(struct sockaddr *)&addr, sizeof(addr));
 
+	if (!mListener)
+	{
+		fprintf(stderr, "Failed to create a listener! \n");
+		return false;
+	}
+
 
 	return true;
 }
@@ -46,7 +52,52 @@ IGCNet::SendMessage()
 {
 }
 
+bool 
+IGCNet::AddNetObject(int socketfd, IGNetObject* pNetObject)
+{
+	return mNetObjectMap.insert(std::map<int, IGNetObject*>::value_type(socketfd, pNetObject)).second;
+}
+
 void
-IGCNet::ListenCallBack(struct evconnlistener* listener, evutil_socket_t fd, struct sockaddr* sa, int socklen, void* user_data)
+IGCNet::ListenCallBack(struct evconnlistener* listener
+				, evutil_socket_t fd, struct sockaddr* sa
+				, int socklen, void* user_data)
+{
+	IGCNet *pIGCNet = (IGCNet *)user_data;
+	struct event_base *eventBase = pIGCNet->mEventBase;		
+	struct bufferevent *bev = bufferevent_socket_new(eventBase, fd, BEV_OPT_CLOSE_ON_FREE);
+	if (!bev)
+	{
+		fprintf(stderr, "Failed to get buffer event.\n");
+		return;
+	}
+	
+	struct sockaddr_in *pAddr = (sockaddr_in *)sa;
+	IGNetObject *pNetObject = new IGNetObject(pIGCNet, fd, *pAddr, bev);
+	IGINet *pNet = pNetObject->GetNetPtr();
+	if (!pNet)
+	{
+		return;
+	}
+	pNet->AddNetObject(fd, pNetObject);
+}
+
+void 
+IGCNet::ReadCB(struct bufferevent *bev, void *user_data)
 {
 }
+
+void
+IGCNet::WriteCB(struct bufferevent *bev, void *user_data)
+{
+}
+
+void
+IGCNet::EventCB(struct bufferevent *bev, short events, void *user_data)
+{
+}
+
+
+
+
+

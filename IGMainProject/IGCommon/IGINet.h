@@ -13,16 +13,22 @@ class IGNetObject
 {
 public:
 	IGNetObject(IGINet *pIGINet, int sockfd, sockaddr_in &addr, void *pBev)
+		: m_pNet(pIGINet)
 	{
 	}
 	virtual ~IGNetObject() {}
 
+	inline IGINet *GetNetPtr()
+	{
+	}	
 	
-public:
-	std::string mStrBuff;
-	std::string mIPAddr;
-	int	mPort;
-	void *mUserData;
+private:
+	std::string m_StrBuff;
+	std::string m_IPAddr;
+	int	m_Port;
+	void *m_UserData;
+
+	IGINet* m_pNet;
 };
 
 class IGINet
@@ -35,6 +41,7 @@ public:
 	virtual bool InitServer(int port) = 0;	
 
 	virtual void SendMessage() = 0;
+	virtual bool AddNetObject(int socketfd, IGNetObject* pNetObject) = 0;
 };
 
 #pragma pack(pop)
