@@ -58,6 +58,33 @@ IGCNet::AddNetObject(int socketfd, IGNetObject* pNetObject)
 	return mNetObjectMap.insert(std::map<int, IGNetObject*>::value_type(socketfd, pNetObject)).second;
 }
 
+
+bool 
+IGCNet::CleanNetObject()
+{
+	std::map<int, IGNetObject*>::iterator it = mNetObjectMap.begin();
+	for (; it != mNetObjectMap.end(); it++) 
+	{
+		int fd = it->first;
+		IGNetObject *pNetObject = it->second;
+		struct bufferevent *bev = (struct bufferevent *)pNetObject->GetUserData();	
+		bufferevent_free(bev);
+		mNetObjectMap.erase(it);
+	}
+
+	return true;
+}
+
+void
+IGCNet::Update()
+{
+}
+
+void
+IGCNet::Finalize()
+{
+}
+
 void
 IGCNet::ListenCallBack(struct evconnlistener* listener
 				, evutil_socket_t fd, struct sockaddr* sa
@@ -80,11 +107,34 @@ IGCNet::ListenCallBack(struct evconnlistener* listener
 		return;
 	}
 	pNet->AddNetObject(fd, pNetObject);
+
+	bufferevent_setcb(bev, ReadCB, WriteCB, EventCB, (void *)pNetObject);
+	bufferevent_enable(bev, EV_READ | EV_WRITE | EV_CLOSED | EV_TIMEOUT);
+
+	EventCB(bev, BEV_EVENT_CONNECTED, (void *)pNetObject);	
 }
 
 void 
 IGCNet::ReadCB(struct bufferevent *bev, void *user_data)
 {
+	IGNetObject *pNetObject = (IGNetObject *)user_data;
+	if (!pNetObject)
+	{
+		return;
+	}	
+
+	struct evbuffer *input = bufferevent_get_input(bev);
+	if (!input)
+	{
+		return;
+	}
+
+	size_t len = evbuffer_get_length(input);
+	unsigned char *pData = evbuffer_pullup(input, len);
+	pNetObject->AddBuff((const char *)pData, len);
+	evbuffer_drain(input, len);
+
+	// TO DO ...
 }
 
 void

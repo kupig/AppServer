@@ -6,6 +6,7 @@
 #include "../../IGMainProject/Dependencies/libevent/event2/event.h"
 #include "../../IGMainProject/Dependencies/libevent/event2/listener.h"
 #include "../../IGMainProject/Dependencies/libevent/event2/bufferevent.h"
+#include "../../IGMainProject/Dependencies/libevent/event2/buffer.h"
 #include <map>
 
 #pragma pack(push, 1)
@@ -20,6 +21,10 @@ public:
 	virtual bool InitServer(int port);
 	virtual void SendMessage();
 	virtual bool AddNetObject(int socketfd, IGNetObject* pNetObject);
+	virtual bool CleanNetObject();
+
+	virtual void Update();
+	virtual void Finalize();
 
 public:
 	static void ListenCallBack(struct evconnlistener* listener, evutil_socket_t fd, struct sockaddr* sa, int socklen, void* user_data);
