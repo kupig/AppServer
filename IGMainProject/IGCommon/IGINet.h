@@ -13,13 +13,23 @@ class IGNetObject
 {
 public:
 	IGNetObject(IGINet *pIGINet, int sockfd, sockaddr_in &addr, void *pBev)
-		: m_pNet(pIGINet)
+		: m_pNet(pIGINet), m_UserData(pBev)
 	{
 	}
 	virtual ~IGNetObject() {}
 
-	inline IGINet *GetNetPtr()
+	inline IGINet *GetNetPtr() 
+	{ 
+		return m_pNet;
+	}
+	inline void *GetUserData() 
+	{ 
+		return m_UserData; 
+	}
+	inline int AddBuff(const char *str, size_t len)
 	{
+		m_StrBuff.append(str, len);
+		return (int)m_StrBuff.length();
 	}	
 	
 private:
@@ -42,6 +52,10 @@ public:
 
 	virtual void SendMessage() = 0;
 	virtual bool AddNetObject(int socketfd, IGNetObject* pNetObject) = 0;
+	virtual bool CloseAllSocket() = 0;
+
+	virtual void Update() = 0;
+	virtual void Finalize() = 0;
 };
 
 #pragma pack(pop)

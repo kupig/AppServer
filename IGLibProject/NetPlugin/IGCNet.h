@@ -8,6 +8,7 @@
 #include "../../IGMainProject/Dependencies/libevent/event2/bufferevent.h"
 #include "../../IGMainProject/Dependencies/libevent/event2/buffer.h"
 #include <map>
+#include <vector>
 
 #pragma pack(push, 1)
 
@@ -21,10 +22,14 @@ public:
 	virtual bool InitServer(int port);
 	virtual void SendMessage();
 	virtual bool AddNetObject(int socketfd, IGNetObject* pNetObject);
-	virtual bool CleanNetObject();
+	virtual bool CloseAllSocket();
 
 	virtual void Update();
 	virtual void Finalize();
+
+public:
+	void CloseNetObject(int sockfd);
+	void RemoveNetObject();
 
 public:
 	static void ListenCallBack(struct evconnlistener* listener, evutil_socket_t fd, struct sockaddr* sa, int socklen, void* user_data);
@@ -36,7 +41,11 @@ private:
 	struct event_base *mEventBase;
 	struct evconnlistener *mListener;
 
-	std::map<int, IGNetObject*> mNetObjectMap;
+	typedef std::map<int, IGNetObject*> NetObjectMap;
+	typedef std::vector<int> NetObjectVec;
+
+	NetObjectMap mNetObjectMap;
+	NetObjectVec mWillCloseNetObjectVec;
 };
 #pragma pack(pop)
 

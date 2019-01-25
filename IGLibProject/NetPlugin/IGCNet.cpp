@@ -5,6 +5,8 @@ IGCNet::IGCNet()
 	: mEventBase(NULL)
 	, mListener(NULL)
 {
+	mNetObjectMap.clear();
+	mWillCloseNetObjectVec.clear();
 }
 
 IGCNet::~IGCNet()
@@ -60,7 +62,7 @@ IGCNet::AddNetObject(int socketfd, IGNetObject* pNetObject)
 
 
 bool 
-IGCNet::CleanNetObject()
+IGCNet::CloseAllSocket()
 {
 	std::map<int, IGNetObject*>::iterator it = mNetObjectMap.begin();
 	for (; it != mNetObjectMap.end(); it++) 
@@ -78,11 +80,66 @@ IGCNet::CleanNetObject()
 void
 IGCNet::Update()
 {
+	RemoveNetObject();
+
+	if (mEventBase)
+	{
+		event_base_loop(mEventBase, EVLOOP_ONCE | EVLOOP_NONBLOCK);
+	}
 }
 
 void
 IGCNet::Finalize()
 {
+	CloseAllSocket();
+
+	if (mListener)
+	{
+		evconnlistener_free(mListener);
+		mListener = NULL;
+	}
+
+	if (mEventBase)
+	{
+		event_base_free(mEventBase);
+		mEventBase = NULL;
+	}
+}
+
+void
+IGCNet::CloseNetObject(int sockfd)
+{
+	NetObjectMap::iterator it= mNetObjectMap.find(sockfd);	
+	if (it != mNetObjectMap.end())
+	{
+		IGNetObject *pNetObject = it->second;
+		if (pNetObject)
+		{
+			// ERROR LOG
+			return;
+		}
+			
+			
+		struct bufferevent *bev = (struct bufferevent *)pNetObject->GetUserData();
+		bufferevent_free(bev);
+	
+		mNetObjectMap.erase(it);
+
+		delete pNetObject;
+		pNetObject = NULL;
+	}	
+}
+
+void
+IGCNet::RemoveNetObject()
+{
+	for (int i = 0; i < mWillCloseNetObjectVec.size(); i++)
+	{
+		int sockfd = mWillCloseNetObjectVec[i];
+		CloseNetObject(sockfd);
+	}
+
+	mWillCloseNetObjectVec.clear();
 }
 
 void
