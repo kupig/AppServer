@@ -30,6 +30,10 @@ $(OBJECT):$(TARGET)
 .PHONY:all clean $(LIBS_DIR)
 
 clean:
-	@find -name "*.o" -exec rm -v {} \;
-	@find -name "*.d" -exec rm -v {} \;
-	@find -type f -perm -111 -exec rm -v {} \;
+	#@find -name "*.o" -exec rm -v {} \;
+	#@find -name "*.d" -exec rm -v {} \;
+	#@find -type f -perm -111 -exec rm -v {} \;
+	rm $(shell find IGMainProject -name "*.o")
+	rm $(shell find IGMainProject -name "*.d")
+	rm $(shell find Bin  -name "*.so")
+	rm $(shell find Bin  -name "IGLoader")
