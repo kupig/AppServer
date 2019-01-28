@@ -3,4 +3,7 @@
 		<Plugin Name="Tutorial1" />
 		<Plugin Name="Tutorial2" />
 	</Tutorial>
+	<GameServer>
+		<Plugin Name="NetPlugin" />
+	</GameServer>
 </PluginConfig>

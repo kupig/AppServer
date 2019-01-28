@@ -221,7 +221,7 @@ IGPluginManager::LoadPluginConfig()
 			pPlugin != NULL; pPlugin = pPlugin->next_sibling("Plugin"))
 	{
 		std::string value = pPlugin->first_attribute("Name")->value();
-		printf("%s\n", value.c_str());
+		printf("\n** current plugin name is: %s", value.c_str());
 		mPluginNameMap.insert(PluginNameMap::value_type(value, false));
 	}	
 

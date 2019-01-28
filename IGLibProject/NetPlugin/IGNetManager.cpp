@@ -57,14 +57,14 @@ IGNetManager::SendMessage()
 bool 
 IGNetManager::AddNetObject(int socketfd, IGNetObject* pNetObject)
 {
-	return mNetObjectMap.insert(std::map<int, IGNetObject*>::value_type(socketfd, pNetObject)).second;
+	return mNetObjectMap.insert(NetObjectMap::value_type(socketfd, pNetObject)).second;
 }
 
 
 bool 
 IGNetManager::CloseAllSocket()
 {
-	std::map<int, IGNetObject*>::iterator it = mNetObjectMap.begin();
+	NetObjectMap::iterator it = mNetObjectMap.begin();
 	for (; it != mNetObjectMap.end(); it++) 
 	{
 		int fd = it->first;
