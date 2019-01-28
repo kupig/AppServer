@@ -7,7 +7,8 @@ SOURCE:=$(shell find IGMainProject -name "*.cpp")
 TARGET=$(SOURCE:.cpp=.o)
 
 LIBS=IGLibProject/Tutorial1 \
-	 IGLibProject/Tutorial2
+	 IGLibProject/Tutorial2 \
+	 IGLibProject/NetPlugin
 
 LIBS_DIR=$(LIBS:=.SUBDIR)
 
