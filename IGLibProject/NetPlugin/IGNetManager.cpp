@@ -158,7 +158,7 @@ IGNetManager::ListenCallBack(struct evconnlistener* listener
 	
 	struct sockaddr_in *pAddr = (sockaddr_in *)sa;
 	IGNetObject *pNetObject = new IGNetObject(pIGNetManager, fd, *pAddr, bev);
-	IGINet *pNet = pNetObject->GetNetPtr();
+	IGNetInterface *pNet = pNetObject->GetNetPtr();
 	if (!pNet)
 	{
 		return;

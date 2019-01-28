@@ -1,18 +1,13 @@
 #ifndef IG_CNET_H
 #define IG_CNET_H
 
-#include "../../IGMainProject/IGCommon/IGINet.h"
-#include "../../IGMainProject/Dependencies/libevent/event2/util.h"
-#include "../../IGMainProject/Dependencies/libevent/event2/event.h"
-#include "../../IGMainProject/Dependencies/libevent/event2/listener.h"
-#include "../../IGMainProject/Dependencies/libevent/event2/bufferevent.h"
-#include "../../IGMainProject/Dependencies/libevent/event2/buffer.h"
+#include "IGNetInterface.h"
 #include <map>
 #include <vector>
 
 #pragma pack(push, 1)
 
-class IGNetManager : public IGINet
+class IGNetManager : public IGNetInterface
 {
 public:
 	IGNetManager();
