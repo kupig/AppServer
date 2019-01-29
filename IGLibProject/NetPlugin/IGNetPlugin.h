@@ -10,8 +10,8 @@ public:
 	IGNetPlugin(IGIPluginManager *p);
 	virtual ~IGNetPlugin();
 
-	virtual void InstallModule();
-	virtual void UninstallModule();	
+	virtual void InstallMoudle();
+	virtual void UninstallMoudle();
 
 	std::string GetPluginName();
 };
