@@ -67,7 +67,7 @@ IGNetManager::CloseAllSocket()
 	NetObjectMap::iterator it = mNetObjectMap.begin();
 	for (; it != mNetObjectMap.end(); it++) 
 	{
-		int fd = it->first;
+		//size_t fd = it->first;
 		IGNetObject *pNetObject = it->second;
 		struct bufferevent *bev = (struct bufferevent *)pNetObject->GetUserData();	
 		bufferevent_free(bev);
@@ -133,7 +133,7 @@ IGNetManager::CloseNetObject(int sockfd)
 void
 IGNetManager::RemoveNetObject()
 {
-	for (int i = 0; i < mWillCloseNetObjectVec.size(); i++)
+	for (size_t i = 0; i < mWillCloseNetObjectVec.size(); i++)
 	{
 		int sockfd = mWillCloseNetObjectVec[i];
 		CloseNetObject(sockfd);

@@ -7,7 +7,7 @@ class IGNetObject
 {
 public:
 	IGNetObject(IGNetInterface *pIGINet, int sockfd, sockaddr_in &addr, void *pBev)
-		: m_pNet(pIGINet), m_UserData(pBev)
+		: m_StrBuff(""), m_IPAddr(""), m_Port(0), m_UserData(pBev) ,m_pNet(pIGINet)
 	{
 	}
 	virtual ~IGNetObject() {}

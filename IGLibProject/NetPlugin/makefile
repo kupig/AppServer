@@ -7,7 +7,7 @@ TARGET=../../Bin/libNetPlugin.so
 
 SOURCE=$(shell find . -name "*.cpp")
 OBJECT=$(SOURCE:.cpp=.o)
-
+ALIB=$(-L./Libevent -levent -levent_core.a -levent_extra.a -levent_pthreads.a)
 #########################################################  
 
 all:$(TARGET) 

@@ -18,7 +18,7 @@ IGDynamicLib::LoadLibrary()
 	mLibHandle = dlopen(libPath.c_str(), RTLD_LAZY);
 	if (!mLibHandle)
 	{
-		printf("load %s error, %.s\n", libPath.c_str(), dlerror());
+		printf("load %s error, %s\n", libPath.c_str(), dlerror());
 	}
 	return mLibHandle != NULL;
 }

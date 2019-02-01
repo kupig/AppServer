@@ -27,8 +27,8 @@ IGNetPlugin::~IGNetPlugin()
 void
 IGNetPlugin::InstallMoudle()
 {
-	PRINT_FUNC();
-	REGISTER_MOUDLE(pPluginManager, );
+	//PRINT_FUNC();
+	//REGISTER_MOUDLE(pPluginManager, IGINetMoudle, IGNetMoudle);
 }
 
 void
@@ -39,5 +39,5 @@ IGNetPlugin::UninstallMoudle()
 std::string
 IGNetPlugin::GetPluginName()
 {
-	return "";
+	return PLUGIN_NAME(IGNetPlugin);
 }

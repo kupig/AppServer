@@ -2,6 +2,7 @@
 	<Tutorial>
 		<Plugin Name="Tutorial1" />
 		<Plugin Name="Tutorial2" />
+		<Plugin Name="NetPlugin" />
 	</Tutorial>
 	<GameServer>
 		<Plugin Name="NetPlugin" />
