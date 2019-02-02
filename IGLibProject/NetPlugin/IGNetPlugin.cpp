@@ -27,13 +27,15 @@ IGNetPlugin::~IGNetPlugin()
 void
 IGNetPlugin::InstallMoudle()
 {
-	//PRINT_FUNC();
-	//REGISTER_MOUDLE(pPluginManager, IGINetMoudle, IGNetMoudle);
+	PRINT_FUNC();
+	REGISTER_MOUDLE(pPluginManager, IGINetMoudle, IGNetMoudle);
 }
 
 void
 IGNetPlugin::UninstallMoudle()
 {
+	PRINT_FUNC();
+	UNREGISTER_MOUDLE(pPluginManager, IGINetMoudle, IGNetMoudle);
 }
 
 std::string
