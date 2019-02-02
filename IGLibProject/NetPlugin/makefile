@@ -7,14 +7,15 @@ TARGET=../../Bin/libNetPlugin.so
 
 SOURCE=$(shell find . -name "*.cpp")
 OBJECT=$(SOURCE:.cpp=.o)
-ALIB=$(-L./Libevent -levent -levent_core.a -levent_extra.a -levent_pthreads.a)
 #########################################################  
 
 all:$(TARGET) 
 		@echo "make lib network plugin done!!"
 
 $(TARGET):$(OBJECT)
-		$(CXX) $(CFLAG) -shared -o $@ $^
+		#$(CXX) $(CFLAG) -shared -o $@ $^ -levent
+		$(CXX) $(CFLAG) -shared -o $@ $^ -L../../Bin/Libevent/ -levent
+
 
 %.o:%.cpp
 		$(CXX) $(CFLAG) -fPIC -MMD -c -o $@ $< -std=gnu++11
