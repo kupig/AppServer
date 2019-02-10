@@ -45,7 +45,6 @@ IGNetManager::InitServer(int port)
 		return false;
 	}
 
-
 	return true;
 }
 

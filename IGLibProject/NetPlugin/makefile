@@ -14,7 +14,7 @@ all:$(TARGET)
 
 $(TARGET):$(OBJECT)
 		#$(CXX) $(CFLAG) -shared -o $@ $^ -levent
-		$(CXX) $(CFLAG) -shared -o $@ $^ -L../../Bin/Libevent/ -levent
+		$(CXX) $(CFLAG) -shared -o $@ $^  -levent -levent_core -levent_extra
 
 
 %.o:%.cpp
@@ -26,5 +26,6 @@ $(TARGET):$(OBJECT)
 
 clean:
 		#rm $(TARGET) $(OBJECT) $(SOURCE:.cpp=.d) $(EXEC)
+	rm *.o *.d
 
 #########################################################

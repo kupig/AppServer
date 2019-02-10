@@ -64,7 +64,7 @@ IGNetMoudle::Finalize()
 void
 IGNetMoudle::CreateServerNet(int port)
 {
-	m_pNetMngr = new IGNetManager();		
+	m_pNetMngr = new IGNetManager(this, &IGNetMoudle::OnReceiveNetPack, &IGNetMoudle::OnEventNetPack);	
 	m_pNetMngr->InitServer(port);
 }
 
@@ -75,3 +75,12 @@ IGNetMoudle::RemoveServerNet()
 	m_pNetMngr = NULL;
 }
 
+void
+IGNetMoudle::OnReceiveNetPack(int sockfd, int msgId, const char *msg, unsigned int len)
+{
+}
+
+void
+IGNetMoudle::OnEventNetPack(int sockfd, IG_NET_EVENT event, IGNetInterface *pINet)
+{
+}

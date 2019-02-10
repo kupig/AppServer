@@ -11,6 +11,16 @@ class IGNetManager : public IGNetInterface
 {
 public:
 	IGNetManager();
+	template<typename HandleClassPtr>
+	IGNetManager(HandleClassPtr *pThis 
+		, void (HandleClassPtr::*handleReceive)(int, int, const char*, unsigned int)
+		, void (HandleClassPtr::*handleEvent)(int, IG_NET_EVENT, IGNetInterface*))
+	{
+		mEventBase = NULL;
+		mListener = NULL;	
+		mReceiveFunc = std::bind(handleReceive, pThis, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4);
+		mEventFunc = std::bind(handleEvent, pThis, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
+	}	
 	virtual ~IGNetManager();
 
 	virtual void InitClient();
@@ -41,6 +51,9 @@ private:
 
 	NetObjectMap mNetObjectMap;
 	NetObjectVec mWillCloseNetObjectVec;
+	
+	NET_RECIEVE_FUNCTION mReceiveFunc;
+	NET_EVENT_FUNCTION mEventFunc;
 };
 #pragma pack(pop)
 

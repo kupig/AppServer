@@ -7,7 +7,7 @@ class IGNetObject
 {
 public:
 	IGNetObject(IGNetInterface *pIGINet, int sockfd, sockaddr_in &addr, void *pBev)
-		: m_StrBuff(""), m_IPAddr(""), m_Port(0), m_UserData(pBev) ,m_pNet(pIGINet)
+		: m_StrBuff(""), m_IPAddr(""), /*m_Port(0),*/ m_UserData(pBev) ,m_pNet(pIGINet)
 	{
 	}
 	virtual ~IGNetObject() {}
@@ -29,7 +29,7 @@ public:
 private:
 	std::string m_StrBuff;
 	std::string m_IPAddr;
-	int	m_Port;
+	//int	m_Port;
 	void *m_UserData;
 
 	IGNetInterface* m_pNet;

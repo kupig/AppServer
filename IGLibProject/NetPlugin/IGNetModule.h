@@ -20,6 +20,11 @@ public:
 
 	virtual void CreateServerNet(int port);
 	virtual void RemoveServerNet();
+
+protected:
+	void OnReceiveNetPack(int sockfd, int msgId, const char* msg, unsigned int len);
+	void OnEventNetPack(int sockfd, IG_NET_EVENT event, IGNetInterface* pINet);
+
 private:
 	IGNetManager *m_pNetMngr;
 };
