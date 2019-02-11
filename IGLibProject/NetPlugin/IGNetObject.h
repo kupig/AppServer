@@ -7,7 +7,7 @@ class IGNetObject
 {
 public:
 	IGNetObject(IGNetInterface *pIGINet, int sockfd, sockaddr_in &addr, void *pBev)
-		: m_StrBuff(""), m_IPAddr(""), /*m_Port(0),*/ m_UserData(pBev) ,m_pNet(pIGINet)
+		: m_StrBuff(""), m_IPAddr(""), /*m_Port(0),*/ m_UserData(pBev) ,m_pNet(pIGINet), m_sockfd(sockfd)
 	{
 	}
 	virtual ~IGNetObject() {}
@@ -20,6 +20,10 @@ public:
 	{ 
 		return m_UserData; 
 	}
+	inline int GetFD()
+	{
+		return m_sockfd;
+	}
 	inline int AddBuff(const char *str, size_t len)
 	{
 		m_StrBuff.append(str, len);
@@ -31,6 +35,7 @@ private:
 	std::string m_IPAddr;
 	//int	m_Port;
 	void *m_UserData;
+	int m_sockfd;
 
 	IGNetInterface* m_pNet;
 };

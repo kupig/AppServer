@@ -2,16 +2,17 @@
 #include <string.h>
 
 IGNetManager::IGNetManager()
-	: mEventBase(NULL)
+	: IGNetInterface(), mEventBase(NULL)
 	, mListener(NULL)
 {
 	mNetObjectMap.clear();
 	mWillCloseNetObjectVec.clear();
 }
-
+/*
 IGNetManager::~IGNetManager()
 {
 }
+*/
 
 void 
 IGNetManager::InitClient()
@@ -191,16 +192,31 @@ IGNetManager::ReadCB(struct bufferevent *bev, void *user_data)
 	evbuffer_drain(input, len);
 
 	// TO DO ...
+	// 拆分消息
 }
 
 void
 IGNetManager::WriteCB(struct bufferevent *bev, void *user_data)
 {
+	// nothing to do , use for sendMsg function .
 }
 
 void
 IGNetManager::EventCB(struct bufferevent *bev, short events, void *user_data)
-{
+{	
+	IGNetObject *pNetObject = (IGNetObject *)user_data;
+	IGNetManager *pNetManager = (IGNetManager *)pNetObject->GetNetPtr();
+
+	pNetManager->mEventFunc(pNetObject->GetFD(), IG_NET_EVENT(events), pNetManager);
+
+	if (events & BEV_EVENT_CONNECTED)
+	{
+		printf("Hey! socket connected.\n");	
+	}
+	else
+	{
+		pNetManager->CloseNetObject(pNetObject->GetFD());
+	}
 }
 
 

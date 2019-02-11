@@ -11,6 +11,7 @@ class IGNetManager : public IGNetInterface
 {
 public:
 	IGNetManager();
+
 	template<typename HandleClassPtr>
 	IGNetManager(HandleClassPtr *pThis 
 		, void (HandleClassPtr::*handleReceive)(int, int, const char*, unsigned int)
@@ -21,7 +22,8 @@ public:
 		mReceiveFunc = std::bind(handleReceive, pThis, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4);
 		mEventFunc = std::bind(handleEvent, pThis, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
 	}	
-	virtual ~IGNetManager();
+
+	virtual ~IGNetManager() {}
 
 	virtual void InitClient();
 	virtual bool InitServer(int port);
