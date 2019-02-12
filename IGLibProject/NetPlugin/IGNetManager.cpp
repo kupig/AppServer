@@ -36,6 +36,13 @@ IGNetManager::InitClient(std::string ip, int port)
 		return;
 	}
 
+	bufevent = bufferevent_socket_new(mEventBase, -1, BEV_OPT_CLOSE_ON_FREE);	
+	if (bufevent == NULL)
+	{
+		printf("Failed to call bufferevent_socket_new(). \n");
+		return;
+	}
+
 	int ret = bufferevent_socket_connect(bufevent, (struct sockaddr *)&addr, sizeof(addr));
 	if (ret != 0)
 	{

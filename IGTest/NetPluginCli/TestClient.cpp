@@ -38,7 +38,13 @@ private:
 	bool bConnected;
 };
 
-int main(int argc, chear * argv[])
+int main(int argc, char * argv[])
 {
+	TestClient cli;
+	while (1)
+	{
+		cli.Update();
+	}
+
 	return 0;
 }
