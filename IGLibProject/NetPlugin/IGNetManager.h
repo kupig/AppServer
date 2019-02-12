@@ -23,9 +23,9 @@ public:
 		mEventFunc = std::bind(handleEvent, pThis, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
 	}	
 
-	virtual ~IGNetManager() {}
+	virtual ~IGNetManager(); 
 
-	virtual void InitClient();
+	virtual void InitClient(std::string ip, int port);
 	virtual bool InitServer(int port);
 	virtual void SendMessage();
 	virtual bool AddNetObject(int socketfd, IGNetObject* pNetObject);

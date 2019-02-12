@@ -8,15 +8,52 @@ IGNetManager::IGNetManager()
 	mNetObjectMap.clear();
 	mWillCloseNetObjectVec.clear();
 }
-/*
+
 IGNetManager::~IGNetManager()
 {
 }
-*/
 
 void 
-IGNetManager::InitClient()
+IGNetManager::InitClient(std::string ip, int port)
 {
+	struct sockaddr_in addr;
+	struct bufferevent *bufevent = NULL;
+
+	memset(&addr, 0, sizeof(addr));
+	addr.sin_family = AF_INET;
+	addr.sin_port = htons(port);
+
+	if (evutil_inet_pton(AF_INET, ip.c_str(), &addr.sin_addr) <= 0)
+	{
+		printf("inet_pton");
+		return;
+	}	
+	
+	mEventBase = event_base_new();
+	if (mEventBase == NULL)
+	{
+		printf("Failed to call event_base_new(). \n");
+		return;
+	}
+
+	int ret = bufferevent_socket_connect(bufevent, (struct sockaddr *)&addr, sizeof(addr));
+	if (ret != 0)
+	{
+		printf("Failed to call bufferevent_socket_connect(). \n");
+		return;
+	}
+
+	int sockfd = bufferevent_getfd(bufevent);
+	IGNetObject *pNetObject = new IGNetObject(this, sockfd, addr, bufevent);
+	bool success = AddNetObject(sockfd, pNetObject);
+	if (!success)
+	{
+		printf("Failed to call AddNetObject().\n");
+		return;
+	}
+
+	bufferevent_setcb(bufevent, ReadCB, WriteCB, EventCB, pNetObject);
+	bufferevent_enable(bufevent, EV_READ|EV_WRITE);
 }
 
 bool

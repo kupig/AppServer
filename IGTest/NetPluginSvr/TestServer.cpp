@@ -1,5 +1,4 @@
-//#include "../../IGLibProject/NetPlugin/IGNetManager.h"
-#include "/home/user/Desktop/AppServer/IGLibProject/NetPlugin/IGNetManager.h"
+#include "../../IGLibProject/NetPlugin/IGNetManager.h"
 #include <stdio.h>
 
 class TestServer

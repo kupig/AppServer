@@ -30,7 +30,7 @@ public:
 	IGNetInterface() {}
 	virtual ~IGNetInterface() {}
 	
-	virtual void InitClient() = 0;
+	virtual void InitClient(std::string ip, int port) = 0;
 	virtual bool InitServer(int port) = 0;	
 
 	virtual void SendMessage() = 0;
