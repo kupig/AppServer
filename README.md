@@ -7,13 +7,21 @@
 
 ## 2. 目录结构
    ├──3rd   第三方库目录
+   
    ├──Bin   执行文件生成目录
+   
    │   ├── Config    xml配置目录
+   
    │   └── Libevent  网络共享库目录
+   
    ├──IGLibProject  插件工程目录
+   
    │   ├── NetPlugin    网络插件
+   
    │   ├── Tutorial1    向导插件1
+   
    │   └── Tutorial2    向导插件2
+   
    
    
 ## 3. 模块功能
