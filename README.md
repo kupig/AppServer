@@ -14,3 +14,9 @@
     - 网络模块 (doing ...)
     - 数据库模块 (to do ...)
     - 日志模块 (to do ...)
+    
+## 4. 运行环境
+    gcc version 4.8 (C++11)
+    macOS, CenterOS
+    
+    
