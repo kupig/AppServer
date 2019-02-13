@@ -7,8 +7,11 @@
     并且，模块通过暴露接口(Interface)的形式实现模块间的通信。
 
 ## 2. 目录结构
-
-   
+    3rd, 存放第三方库安装包
+    Bin, 生成目录
+    IGLibProject, 插件工程目录
+    IGMainProject, 加载插件工程目录
+    IGTest, 网络代码测试目录   
    
 ## 3. 模块功能
     - 网络模块 (doing ...)
