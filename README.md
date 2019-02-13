@@ -22,5 +22,7 @@
 ## 4. 运行环境
     gcc version 4.8 (C++11)
     macOS, CenterOS
+    libevent 2.1.8
+    rapidxml 1.13
     
     
