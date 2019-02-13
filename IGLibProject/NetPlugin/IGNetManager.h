@@ -27,7 +27,7 @@ public:
 
 	virtual void InitClient(std::string ip, int port);
 	virtual bool InitServer(int port);
-	virtual void SendMessage();
+	virtual bool SendMessage(int sockfd, const char *msg, size_t len);
 	virtual bool AddNetObject(int socketfd, IGNetObject* pNetObject);
 	virtual bool CloseAllSocket();
 

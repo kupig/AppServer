@@ -18,6 +18,7 @@ public:
 
 	void ReceiveHandler(int sockfd, int msgId, const char *msg, unsigned int len)
 	{
+		printf("receive message: %s\n", msg);
 	}
 
 	void EventHandle(int sockfd, IG_NET_EVENT event, IGNetInterface *p)

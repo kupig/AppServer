@@ -25,6 +25,8 @@ public:
 		if (event & IG_NET_EVENT_CONNECTED)
 		{
 			bConnected = true;
+
+			pNet->SendMessage(sockfd, "this is test", 12);
 		}
 	}
 

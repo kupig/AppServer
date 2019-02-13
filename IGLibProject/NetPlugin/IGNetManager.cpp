@@ -93,9 +93,31 @@ IGNetManager::InitServer(int port)
 	return true;
 }
 
-void
-IGNetManager::SendMessage()
+bool
+IGNetManager::SendMessage(int sockfd, const char *msg, size_t len)
 {
+	bool ret = false;
+
+	NetObjectMap::iterator it= mNetObjectMap.find(sockfd);
+	if (it != mNetObjectMap.end())
+	{
+		IGNetObject *pNetObject = (IGNetObject *)it->second;
+		if (pNetObject == NULL)
+		{
+			printf("Failed to get sockfd(%d) in SendMessage(). \n", sockfd);
+		}
+		else
+		{
+			bufferevent *bev = (bufferevent *)pNetObject->GetUserData();
+			if (bev != NULL)
+			{
+				bufferevent_write(bev, msg, len);
+			}
+			ret = true;
+		}
+	}
+
+	return ret;
 }
 
 bool 
@@ -234,6 +256,10 @@ IGNetManager::ReadCB(struct bufferevent *bev, void *user_data)
 	unsigned char *pData = evbuffer_pullup(input, len);
 	pNetObject->AddBuff((const char *)pData, len);
 	evbuffer_drain(input, len);
+
+	// 临时测试, 未经过打包处理.
+	IGNetManager *pNetManager = (IGNetManager *)pNetObject->GetNetPtr(); 
+	pNetManager->mReceiveFunc(pNetObject->GetFD(), 0, pNetObject->GetBuff(), pNetObject->GetBuffLen());
 
 	// TO DO ...
 	// 拆分消息

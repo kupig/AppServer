@@ -33,7 +33,7 @@ public:
 	virtual void InitClient(std::string ip, int port) = 0;
 	virtual bool InitServer(int port) = 0;	
 
-	virtual void SendMessage() = 0;
+	virtual bool SendMessage(int sockfd, const char *msg, size_t len) = 0;
 	virtual bool AddNetObject(int socketfd, IGNetObject* pNetObject) = 0;
 	virtual bool CloseAllSocket() = 0;
 
