@@ -15,14 +15,14 @@
    
 ## 3. 模块功能
     功能模块存放在"插件工程目录", 分别有如下功能插件:
-    - 网络模块 (doing ...)
+    - 网络模块 (进度80%)
     - 数据库模块 (to do ...)
     - 日志模块 (to do ...)
     
 ## 4. 配置,运行环境
     libevent 2.1.8
     rapidxml 1.13
-    gcc version 4.8 (C++11)
+    gcc [version >= 4.8]
     macOS, CenterOS
 
 ## 5. Build and Install
