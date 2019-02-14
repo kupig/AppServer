@@ -19,13 +19,19 @@
     - 数据库模块 (to do ...)
     - 日志模块 (to do ...)
     
-## 4. 运行环境
-    gcc version 4.8 (C++11)
-    macOS, CenterOS
+## 4. 配置,运行环境
     libevent 2.1.8
     rapidxml 1.13
+    gcc version 4.8 (C++11)
+    macOS, CenterOS
 
-## 5. 正在准备完成如下功能.
+## 5. Build and Install
+    git init
+    git clone git@github.com:kupig/AppServer.git
+    进入根目录, 执行 make
+    进入Bin目录, 运行"IGLoader Server=服务名称"
+
+## 6. 正在准备完成如下功能.
     1. 网络消息部分, 包括:网络协议, 打包, 拆包处理.
     2. 测试网络消息异步处理.
     
