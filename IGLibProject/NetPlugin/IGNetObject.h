@@ -1,6 +1,8 @@
 #ifndef IG_INETOBJECT_H
 #define IG_INETOBJECT_H
 
+#include "../../IGMainProject/IGCommon/IGPlatform.h"
+
 class IGNetInterface;
 
 class IGNetObject
@@ -39,6 +41,18 @@ public:
 	
 	inline int GetBuffLen()
 	{
+		return m_StrBuff.length();
+	}
+	
+	inline int RemoveBuff(unsigned int position, unsigned int len)
+	{
+		if (position + len > m_StrBuff.length())
+		{
+			return INVALID;
+		}
+
+		m_StrBuff.erase(position, len);
+		
 		return m_StrBuff.length();
 	}
 

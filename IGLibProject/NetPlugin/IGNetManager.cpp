@@ -258,8 +258,9 @@ IGNetManager::ReadCB(struct bufferevent *bev, void *user_data)
 	evbuffer_drain(input, len);
 
 	// 临时测试, 未经过打包处理.
-	IGNetManager *pNetManager = (IGNetManager *)pNetObject->GetNetPtr(); 
-	pNetManager->mReceiveFunc(pNetObject->GetFD(), 0, pNetObject->GetBuff(), pNetObject->GetBuffLen());
+	// IGNetManager *pNetManager = (IGNetManager *)pNetObject->GetNetPtr(); 
+	// pNetManager->mReceiveFunc(pNetObject->GetFD(), 0, pNetObject->GetBuff(), pNetObject->GetBuffLen());
+	// pNetObject->RemoveBuff(0, pNetObject->GetBuffLen());
 
 	// TO DO ...
 	// 拆分消息

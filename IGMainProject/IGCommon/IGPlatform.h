@@ -1,6 +1,7 @@
 #ifndef IG_PLATFORM_H
 #define IG_PLATFORM_H
 
+#define INVALID (-1)
 
 #define IG_PLATFORM_WINDOWS 1
 #define IG_PLATFORM_LINUX	2
