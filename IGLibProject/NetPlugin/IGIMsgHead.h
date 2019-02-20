@@ -46,11 +46,39 @@ public:
 		{
 			assert(0);	
 		}
+		
+		return offset;
 	}
 
 	virtual int DeCode(const char *data)
 	{
+		uint32_t offset = 0;
+		
+		// msgId = 2Byte
+		uint16_t msgId = 0;
+		memcpy(&msgId, data + offset, sizeof(msgId));
+		mMsgId = be16toh(msgId);	
+		offset += sizeof(msgId);
+
+		// msg size = 4Byte
+		uint32_t packSize = 0;
+		memcpy(&packSize, data + offset, sizeof(packSize));	
+		mSize = be32toh(data);
+		offset += sizeof(packSize);
+
+		if (offset != IG_HEAD_LENGTH)
+		{
+			assert(0);
+		}
+
+		return offset;
 	}
+
+	virtual int GetMsgID() { return mMsgId;}
+	virtual void SetMsgID(uint16_t msgId) { mMsgId = msgId; }
+
+	virtual int GetBodyLen() {return mSize;}
+	virtual int SetBodyLen(uint32_t size) {mSize = size;}
 
 private:
 	uint32_t mSize;
