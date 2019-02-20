@@ -28,3 +28,27 @@
   3)  cd ./.libs
   ```
 
+## proto
+* **protobuf-cpp-3.7.0-rc-2.zip**
+  compile and install protocal
+  ```c++
+  ./configure --prefix=/usr/local/protobuf
+  make
+  make check
+  make install
+  ```
+
+  protobuf install path
+  ```c++
+  usr/local/bin
+  usr/local/lib
+  usr/local/include 
+  ```
+
+  protobuf environment value  
+  ```c++
+  1) export LD_LIBRARY_PATH=/usr/local/lib
+
+  2) vim /etc/ld.so.conf 
+     add "/usr/local/lib"
+  ```
