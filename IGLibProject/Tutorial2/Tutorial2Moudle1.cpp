@@ -1,6 +1,7 @@
 #include "Tutorial2Moudle1.h"
 #include "../../IGMainProject/IGCommon/IGPlatform.h"
 #include "../../IGMainProject/IGPluginMoudle/IGITutorial1Moudle1.h"
+#include "../../IGMainProject/IGPluginMoudle/IGINetMoudle.h"
 
 Tutorial2Moudle1::Tutorial2Moudle1(IGIPluginManager *p)
 {
@@ -26,6 +27,9 @@ Tutorial2Moudle1::Init()
 	IGITutorial1Moudle1 *pTutorial1Moudle1 = ((IGIPluginManager *)pPluginManager)->FindMoudle<IGIMoudle, IGITutorial1Moudle1>();
 	pTutorial1Moudle1->Test();
 
+	IGINetMoudle *pNetMoudle = ((IGIPluginManager *)pPluginManager)->FindMoudle<IGIMoudle, IGINetMoudle>();
+	pNetMoudle->CreateServerNet(8888);
+	
 	return true;
 }
 

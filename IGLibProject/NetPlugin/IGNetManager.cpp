@@ -1,4 +1,5 @@
 #include "IGNetManager.h"
+#include "IGIMsgHead.h"
 #include <string.h>
 
 IGNetManager::IGNetManager()
@@ -262,8 +263,41 @@ IGNetManager::ReadCB(struct bufferevent *bev, void *user_data)
 	// pNetManager->mReceiveFunc(pNetObject->GetFD(), 0, pNetObject->GetBuff(), pNetObject->GetBuffLen());
 	// pNetObject->RemoveBuff(0, pNetObject->GetBuffLen());
 
-	// TO DO ...
-	// 拆分消息
+	bool readend = false;
+	while (!readend)
+	{
+		int len = pNetObject->GetBuffLen();
+		if (len >= IGIMsgHead::IG_Head::IG_HEAD_LENGTH)
+		{
+			IGCMsgHead msgHead;
+			msgHead.DeCode(pNetObject->GetBuff());
+
+			int msgId = msgHead.GetMsgID();
+			int msgBodyLen = msgHead.GetBodyLen();
+
+			if (msgId > 0 && msgBodyLen > 0)
+			{
+				IGNetManager *pNetManager = (IGNetManager *)pNetObject->GetNetPtr();	
+				if (pNetManager->mReceiveFunc)
+				{
+					pNetManager->mReceiveFunc
+						(pNetObject->GetFD(), msgHead.GetMsgID(), 
+						 pNetObject->GetBuff() + IGIMsgHead::IG_Head::IG_HEAD_LENGTH, msgBodyLen);
+				}
+
+				pNetObject->RemoveBuff(0, IGIMsgHead::IG_Head::IG_HEAD_LENGTH + msgBodyLen);
+			}
+
+			if (msgBodyLen == 0)
+			{
+				readend = true;
+			}
+		}			
+		else
+		{
+			readend = true;
+		}
+	}
 }
 
 void
@@ -286,8 +320,7 @@ IGNetManager::EventCB(struct bufferevent *bev, short events, void *user_data)
 	}
 	else
 	{
-		pNetManager->CloseNetObject(pNetObject->GetFD());
-	}
+		pNetManager->CloseNetObject(pNetObject->GetFD()); }
 }
 
 
