@@ -2,6 +2,7 @@
 #define __IG_INET_H__
 
 #include <string>
+#include <memory>
 #include <functional>
 
 #pragma pack(push, 1)
@@ -22,7 +23,10 @@ enum IG_NET_EVENT
 };
 
 typedef std::function<void(int sockfd, int msgId, const char *msg, unsigned int len)> NET_RECIEVE_FUNCTION;
+typedef std::shared_ptr<NET_RECIEVE_FUNCTION> NET_RECIEVE_FUNCTION_PTR;
+
 typedef std::function<void(int sockfd, IG_NET_EVENT event, IGNetInterface*)> NET_EVENT_FUNCTION;
+typedef std::shared_ptr<NET_EVENT_FUNCTION> NET_EVENT_FUNCTION_PTR;
 
 class IGNetInterface
 {

@@ -21,12 +21,14 @@ public:
 	virtual void CreateServerNet(int port);
 	virtual void RemoveServerNet();
 
+	virtual bool ReMsgCB(int msgId, NET_RECIEVE_FUNCTION_PTR &cb);
 protected:
 	void OnReceiveNetPack(int sockfd, int msgId, const char* msg, unsigned int len);
 	void OnEventNetPack(int sockfd, IG_NET_EVENT event, IGNetInterface* pINet);
 
 private:
 	IGNetManager *m_pNetMngr;
+	//std::map<int,>
 };
 
 #endif // IG_NETMOUDLE_H

@@ -75,6 +75,12 @@ IGNetMoudle::RemoveServerNet()
 	m_pNetMngr = NULL;
 }
 
+bool 
+IGNetMoudle::ReMsgCB(int msgId, NET_RECIEVE_FUNCTION_PTR &cb)
+{
+	return true;
+}
+
 void
 IGNetMoudle::OnReceiveNetPack(int sockfd, int msgId, const char *msg, unsigned int len)
 {
